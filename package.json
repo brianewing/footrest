@@ -10,6 +10,10 @@
   "engines": {
     "node": "~0.6.5"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "cradle": "~0.5.7"
+  },
+  "devDependencies": {
+    "vows": "~0.6.0"
+  }
 }

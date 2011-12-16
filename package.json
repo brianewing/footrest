@@ -1,0 +1,15 @@
+{
+  "author": "Brian Ewing <me@brianewing.co.uk> (http://brianewing.me)",
+  "name": "footrest",
+  "description": "Lightweight CouchDB ODM written in CoffeeScript",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:brianewing/footrest.git"
+  },
+  "engines": {
+    "node": "~0.6.5"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

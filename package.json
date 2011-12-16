@@ -3,17 +3,23 @@
   "name": "footrest",
   "description": "Lightweight CouchDB ODM written in CoffeeScript",
   "version": "0.0.0",
+
+  "main": "lib/index",
+
   "repository": {
     "type": "git",
     "url": "git@github.com:brianewing/footrest.git"
   },
+
   "engines": {
     "node": "~0.6.5"
   },
+
   "dependencies": {
     "cradle": "~0.5.7"
   },
+
   "devDependencies": {
-    "vows": "~0.6.0"
+    "jasmine-node": "~1.0.0"
   }
 }

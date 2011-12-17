@@ -30,8 +30,8 @@ Hopefully this feels as natural to you as it does to me.
 
     Model = require('footrest').Model
 
-    # this can be set per-model in the class definition, at runtime, etc. works with inheritance
-    Model.database = require('footrest').createConnection().database('footrest')
+    # this can be set per-model in the class definition, at runtime, etc
+    Model.database = require('footrest').database('footrest')
 
     class Animal extends Model
       @type 'Animal'
@@ -41,7 +41,7 @@ Hopefully this feels as natural to you as it does to me.
       @attr 'name'
       @attr 'species', default: 'dog'
       @attr 'breed', default: 'greyhound'
-      @attr('bites', default: true) # parenthesis for compiler bug
+      @attr('bites', default: true)
 
       strokeable: ->
         @cute or not @bites

@@ -19,7 +19,7 @@ Read the tests for a better idea how footrest can be used until better documenta
 Running the tests
 ------------
 
-0. `npm install`
+0. Run CouchDB on localhost:5984 in admin party mode
 0. `npm test`
 0. Watch it pass ☺
 

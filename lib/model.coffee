@@ -11,7 +11,6 @@ class Model
     @attributes ||= []
 
     if typeof(attributes[attributes.length-1]) is "object"
-      console.log "Got a wee object"
       options = attributes.pop()
 
       if options.default

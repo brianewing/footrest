@@ -1,3 +1,5 @@
+_ = require('underscore')
+
 class Model
   constructor: (@props = {}) ->
     @setupProps()
@@ -15,14 +17,16 @@ class Model
 
       if options.default
         @defaults ||= {}
+        @defaults = _.clone @defaults
+
         attributes.forEach (attribute) =>
           @defaults[attribute] = options.default
     
-    @attributes = @attributes.concat(attributes)
+    @attributes = _.uniq @attributes.concat(attributes)
   
   @type = (type = false) ->
-    @type = type if type
-    @type
+    @_type = type if type
+    @_type
   
   setupProps: ->
     @_props = {}

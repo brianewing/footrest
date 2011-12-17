@@ -27,6 +27,7 @@ class Model
     @attributes = _.uniq @attributes.concat(attributes)
   
   @beforeSave = (callbacks...) -> @bind 'beforeSave', callbacks...
+  @afterSave = (callbacks...) -> @bind 'afterSave', callbacks...
 
   @bind = (event, callbacks...) ->
     @_callbacks ||= {}
@@ -81,9 +82,10 @@ class Model
     @fire "beforeSave"
     @store.save @_props, (success, props) =>
       @_props[key] = val for key, val of props
-      callback success
+      @_dirty = []
 
-    @_dirty = []
+      @fire "afterSave"
+      callback success
   
   type: -> @constructor.type()
 

@@ -29,5 +29,9 @@
       "type": "MIT",
       "url": "https://raw.github.com/brianewing/footrest/master/LICENSE"
     }
-  ]
+  ],
+
+  "scripts": {
+    "test": "scripts/test"
+  }
 }

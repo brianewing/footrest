@@ -20,7 +20,7 @@ Running the tests
 ------------
 
 0. `npm install`
-0. `jasmine-node --coffee spec`
+0. `npm test`
 0. Watch it pass ☺
 
 Long example

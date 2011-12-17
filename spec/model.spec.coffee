@@ -1,8 +1,6 @@
 Model = require('../lib/index').Model
-database = require('../lib/index').createConnection().database('footrest')
 
 class Thing extends Model
-  @database = database
   @type 'Thing'
 
   @attr 'one', 'two'

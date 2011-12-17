@@ -3,7 +3,7 @@ Model = require('../lib/model').Model
 
 class Address extends Model
   @type 'Address'
-  @database = footrest.createConnection().database('footrest')
+  @database = footrest.database('footrest')
 
   @attr 'street', 'number', 'postcode'
 

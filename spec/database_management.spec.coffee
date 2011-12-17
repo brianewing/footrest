@@ -2,8 +2,7 @@ footrest = require '../lib/index'
 
 describe 'database management', ->
   beforeEach ->
-    @connection = footrest.createConnection()
-    @database = @connection.database('footrest')
+    @database = footrest.database('footrest')
 
     @database.destroy => @destroyed = true
     waitsFor -> @destroyed?

@@ -26,6 +26,23 @@ class Model
     
     @attributes = _.uniq @attributes.concat(attributes)
   
+  @beforeSave = (callbacks...) -> @bind 'beforeSave', callbacks...
+
+  @bind = (event, callbacks...) ->
+    @_callbacks ||= {}
+    @_callbacks = _.clone @_callbacks
+    @_callbacks[event] ||= []
+
+    @_callbacks[event] = @_callbacks[event].concat callbacks
+  
+  fire: (event, args...) ->
+    return false unless @constructor._callbacks? and @constructor._callbacks[event]?
+
+    @constructor._callbacks[event].forEach (callback) =>
+      callback = @[callback] unless typeof(callback) == "function"
+
+      callback.apply @, args...
+  
   @type = (type = false) ->
     @_type = type if type
     @_type
@@ -61,6 +78,7 @@ class Model
       callback false
       return
     
+    @fire "beforeSave"
     @store.save @_props, (success, props) =>
       @_props[key] = val for key, val of props
       callback success

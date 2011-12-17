@@ -22,5 +22,12 @@
 
   "devDependencies": {
     "jasmine-node": "~1.0.0"
-  }
+  },
+
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/brianewing/footrest/master/LICENSE"
+    }
+  ]
 }

@@ -2,11 +2,23 @@ class Model
   constructor: (@props) ->
     @setupProps()
     @update @props
+    @persisted = @props._id?
+    @addDefaults()
 
     @database = @constructor.database
   
   @attr = (attributes...) ->
     @attributes ||= []
+
+    if typeof(attributes[attributes.length-1]) is "object"
+      console.log "Got a wee object"
+      options = attributes.pop()
+
+      if options.default
+        @defaults ||= {}
+        attributes.forEach (attribute) =>
+          @defaults[attribute] = options.default
+    
     @attributes = @attributes.concat(attributes)
   
   @type = (type = false) ->
@@ -25,9 +37,15 @@ class Model
         @_props[attr] = val
         @_dirty.push attr
   
-  update: (props) ->
+  addDefaults: ->
+    @update(@constructor.defaults, false) if @constructor.defaults? and not @persisted
+  
+  update: (props, override = true) ->
     for key, value of props
-      @[key] = value
+      if override
+        @[key] = value
+      else
+        @[key] ||= value
   
   save: (callback) ->
     return false if @_dirty.length == 0

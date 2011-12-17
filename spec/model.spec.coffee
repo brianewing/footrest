@@ -26,3 +26,9 @@ describe 'model', ->
     
     expect(thing.two).toEqual undefined
     expect(thing.three).toEqual 'Defacto!'
+
+    thing2 = new Thing
+      one: 'Hello'
+      three: 'World'
+    
+    expect(thing2.three).toEqual 'World'

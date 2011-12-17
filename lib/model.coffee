@@ -1,5 +1,5 @@
 class Model
-  constructor: (@props) ->
+  constructor: (@props = {}) ->
     @setupProps()
     @update @props
     @persisted = @props._id?

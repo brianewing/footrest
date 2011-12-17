@@ -1,4 +1,5 @@
 _ = require('underscore')
+CouchStore = require('./store').get('couch')
 
 class Model
   constructor: (@props = {}) ->
@@ -8,6 +9,7 @@ class Model
     @addDefaults()
 
     @database = @constructor.database
+    @store = new CouchStore(@, @database)
   
   @attr = (attributes...) ->
     @attributes ||= []
@@ -39,6 +41,10 @@ class Model
       @__defineSetter__ attr, (val) =>
         @_props[attr] = val
         @_dirty.push attr
+    
+    @__defineGetter__ 'id', => @_props['_id']
+    @__defineSetter__ 'id', (val) => @_props['_id'] = val
+    @__defineGetter__ 'rev', => @_props['_rev']
   
   addDefaults: ->
     @update(@constructor.defaults, false) if @constructor.defaults? and not @persisted
@@ -51,7 +57,15 @@ class Model
         @[key] ||= value
   
   save: (callback) ->
-    return false if @_dirty.length == 0
+    if @_dirty.length == 0
+      callback false
+      return
+    
+    @store.save @_props, (success, props) =>
+      @_props[key] = val for key, val of props
+      callback success
+
+    @_dirty = []
   
   type: -> @constructor.type()
 

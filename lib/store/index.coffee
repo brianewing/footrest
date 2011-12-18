@@ -1,8 +1,6 @@
-CouchStore = require('./couch').CouchStore
-
 exports.get = (store) ->
   switch store
     when "couch"
-      CouchStore
+      require('./couch')
     else
       throw new Exception "Store not available"

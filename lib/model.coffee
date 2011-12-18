@@ -1,5 +1,5 @@
 _ = require('underscore')
-CouchStore = require('./store').get('couch')
+couch = require('./store').get('couch')
 
 class Model
   constructor: (@props = {}) ->
@@ -9,7 +9,7 @@ class Model
     @addDefaults()
 
     @database = @constructor.database
-    @store = new CouchStore(@, @database)
+    @store = couch
   
   @attr = (attributes...) ->
     @attributes ||= []
@@ -80,7 +80,7 @@ class Model
       return
     
     @fire "beforeSave"
-    @store.save @_props, (success, props) =>
+    @store.save @database, @_props, (success, props) =>
       @_props[key] = val for key, val of props
       @_dirty = []
 

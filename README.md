@@ -1,4 +1,4 @@
-Footrest: Lightweight ODM for CouchDB on Node
+Footrest: Lightweight ODM for CouchDB on Node ![Build status](https://secure.travis-ci.org/brianewing/footrest.png)
 ========
 
 What is this is don't even?

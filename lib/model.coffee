@@ -2,6 +2,8 @@ _ = require('underscore')
 couch = require('./store').get('couch')
 
 class Model
+  @store = couch
+
   constructor: (@props = {}) ->
     @setupProps()
     @update @props
@@ -9,7 +11,6 @@ class Model
     @addDefaults()
 
     @database = @constructor.database
-    @store = couch
   
   @attr = (attributes...) ->
     @attributes ||= []
@@ -36,6 +37,9 @@ class Model
 
     @_callbacks[event] = @_callbacks[event].concat callbacks
   
+  @beforeSave ->
+    @attr 'type', @type()
+
   fire: (event, args...) ->
     return false unless @constructor._callbacks? and @constructor._callbacks[event]?
 
@@ -74,13 +78,27 @@ class Model
       else
         @[key] ||= value
   
+  @load = (id, callback) ->
+    @store.load @database, id, (success, doc) =>
+      if success and doc
+        if doc.type == @type()
+          model = new @()
+          model._props = doc
+
+          callback(true, model)
+        else
+          callback(false, {error: 'type_mismatch', doc: doc})
+      else
+        error = doc
+        callback(false, error) # doc => error
+  
   save: (callback) ->
     if @_dirty.length == 0
       callback false
       return
     
     @fire "beforeSave"
-    @store.save @database, @_props, (success, props) =>
+    @constructor.store.save @database, @_props, (success, props) =>
       @_props[key] = val for key, val of props
       @_dirty = []
 
@@ -88,5 +106,11 @@ class Model
       callback success
   
   type: -> @constructor.type()
+
+  attr: (name, val) ->
+    if val?
+      @_props[name] = val
+    else
+      @_props[name]
 
 exports.Model = Model

@@ -2,7 +2,7 @@
   "author": "Brian Ewing <me@brianewing.co.uk> (http://brianewing.me)",
   "name": "footrest",
   "description": "Lightweight CouchDB ODM written in CoffeeScript",
-  "version": "0.0.0",
+  "version": "0.0.1",
 
   "main": "lib/index",
 

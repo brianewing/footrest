@@ -5,7 +5,7 @@ What is this is don't even?
 ---------------------------
 
 Footrest lets you define models that will be backed by a Couch database.
-It tries to work in exactly the way you'd expect it to, with an ActiveRecord-esque API.
+It tries to work in exactly the way you'd expect it to, with an ActiveModel-esque API.
 
 Whilst it's still being put together, footrest will support callbacks (beforeSave, afterSave, etc) and validations.
 

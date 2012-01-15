@@ -27,3 +27,20 @@ describe 'database management', ->
     
     waitsFor -> @exists?
     runs -> expect(@exists).toEqual false
+
+describe 'database object creation', ->
+  it 'should parse various options from database URI', ->
+    db = footrest.createConnection url: 'https://bob:thebuilder@remote.couch:1234'
+
+    expect(db.auth.username).toEqual 'bob'
+    expect(db.auth.password).toEqual 'thebuilder'
+    expect(db.host).toEqual 'remote.couch'
+    expect(db.port.toString()).toEqual '1234'
+  
+  it 'should parse options from database URI without auth and port', ->
+    db = footrest.createConnection url: 'http://remote.couch'
+
+    expect(db.auth.username).toEqual null
+    expect(db.auth.password).toEqual null
+    expect(db.host).toEqual 'remote.couch'
+    expect(db.port.toString()).toEqual '5984'

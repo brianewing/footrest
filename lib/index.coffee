@@ -9,7 +9,6 @@ uriToOptions = (uri) ->
   auth:
     username: uri.auth?.split(':')[0]
     password: uri.auth?.split(':')[1]
-    
 
 exports.createConnection = (options) ->
   if options.url

@@ -105,6 +105,14 @@ class Model
       @fire "afterSave"
       callback success
   
+  delete: (callback) ->
+    @fire "beforeDelete"
+    @constructor.store.delete @database, @id, (success, err) =>
+      if success
+        @fire "afterDelete"
+      
+      callback success, err
+  
   type: -> @constructor.type()
 
   attr: (name, val) ->

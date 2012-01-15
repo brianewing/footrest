@@ -89,3 +89,17 @@ describe 'persistence', ->
       runs ->
         expect(@success).toEqual false
         expect(@error.error).toEqual 'type_mismatch'
+  
+  it 'should delete successfully', ->
+    @address.save (@saved) => @address.delete (@deleted, @error) =>
+    waitsFor -> @deleted
+
+    runs ->
+      expect(@deleted).toEqual true
+      expect(@error).toEqual null
+
+      Address.load @address.id, (@success, @error) =>
+      
+      waitsFor -> @success?
+      runs ->
+        expect(@success).toEqual false

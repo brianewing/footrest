@@ -11,3 +11,7 @@ exports.load = (database, id, callback) ->
       callback(false, error)
     else
       callback(true, doc)
+
+exports.delete = (database, id, callback) ->
+  database.remove id, (error) ->
+    callback(!error)

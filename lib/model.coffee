@@ -94,7 +94,7 @@ class Model
   
   save: (callback) ->
     if @_dirty.length == 0
-      callback false
+      callback false if callback
       return
     
     @fire "beforeSave"
@@ -103,7 +103,7 @@ class Model
       @_dirty = []
 
       @fire "afterSave"
-      callback success
+      callback success if callback
   
   delete: (callback) ->
     @fire "beforeDelete"
@@ -111,7 +111,7 @@ class Model
       if success
         @fire "afterDelete"
       
-      callback success, err
+      callback success, err if callback
   
   type: -> @constructor.type()
 

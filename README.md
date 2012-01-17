@@ -28,45 +28,59 @@ Long example
 
 Hopefully this feels as natural to you as it does to me.
 
-    Model = require('footrest').Model
+```coffeescript
+Model = require('footrest').Model
 
-    # this can be set per-model in the class definition, at runtime, etc
-    Model.database = require('footrest').database('footrest')
+# this can be set per-model in the class definition, at runtime, etc
+Model.database = require('footrest').database('footrest')
 
-    class Animal extends Model
-      @type 'Animal'
-      @attr 'species', 'name'
+class Animal extends Model
+  @type 'Animal'
+  @attr 'species', 'name'
 
-    class Dog extends Animal
-      @attr 'name'
-      @attr 'species', default: 'dog'
-      @attr 'breed', default: 'greyhound'
-      @attr('bites', default: true)
+class Dog extends Animal
+  @attr 'name'
+  @attr 'species', default: 'dog'
+  @attr 'breed', default: 'greyhound'
+  @attr 'bites', default: true
+  @attr 'age'
+  @attr 'ageDogYears'
 
-      strokeable: ->
-        @cute or not @bites
+  @beforeSave 'calculateDogYears'
 
-    class Terrier extends Dog
-      @attr 'breed', default: 'west_highland_terrier'
-      @attr 'bites', default: false
-      @attr 'cute', default: true
+  strokeable: ->
+    @cute or not @bites
+  
+  calculateDogYears: ->
+    @ageDogYears = if @age then @age * 7 else 0
 
-    spot = new Dog
-      name: 'Spot'
+class Terrier extends Dog
+  @attr 'breed', default: 'west_highland_terrier'
+  @attr 'bites', default: false
+  @attr 'cute', default: true
 
-    oscar = new Terrier(name: 'Oscar')
+spot = new Dog
+  name: 'Spot'
+  age: 3
 
-    oscar.strokeable() # => true
-    spot.strokeable() # => false
-    oscar.species # => 'dog'
+oscar = new Terrier(name: 'Oscar', age: 2)
 
-    oscar.cute = false
-    oscar.bites = true
-    oscar.strokeable() # => true
+oscar.strokeable() # => true
+spot.strokeable() # => false
+oscar.species # => 'dog'
 
-    oscar.id # => null
-    oscar.hello # => undefined
+oscar.cute = false
+oscar.bites = true
+oscar.strokeable() # => true
 
-    oscar.save (success) ->
-      oscar.id # => "73e98a88a53cbd6d9028a03d6e004fe4"
-      oscar.rev # => "1-c3f75784f5f9a82faadac4ded1306412"
+oscar.ageDogYears # => null, not saved yet
+
+oscar.id # => null
+oscar.hello # => undefined
+
+oscar.save (success) ->
+  oscar.id # => "73e98a88a53cbd6d9028a03d6e004fe4"
+  oscar.rev # => "1-c3f75784f5f9a82faadac4ded1306412"
+
+  oscar.ageDogYears # => 14
+```
